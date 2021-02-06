@@ -6,7 +6,6 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
   && apt-key update \
   && apt-get update -qq \
   && apt-get install -y --no-install-recommends build-essential libpq-dev nodejs yarn less \
-  && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
   && sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/' /etc/ssl/openssl.cnf
 
 WORKDIR /app
