@@ -4,13 +4,17 @@ module Api
       resources :videos do
         desc "Create videos"
         params do
-          requires :name, type: String
-          requires :content, type: String
+          requires :title, type: String
+          requires :text, type: String
         end
         post "/" do
-          splited_contents = params[:content].split("\n").reject &:blank?
+          video_id = SecureRandom.hex
 
-          { splited_contents: splited_contents }
+          if DownloadAudio.new(video_id, params[:text]).perform
+            
+          end
+
+          { video_id: video_id }
         end
       end
     end
