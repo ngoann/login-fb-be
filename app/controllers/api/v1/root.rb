@@ -5,7 +5,8 @@ module Api
       version :v1
       format :json
 
-      mount Videos
+      mount Auth
+      mount Users
     end
   end
 end
