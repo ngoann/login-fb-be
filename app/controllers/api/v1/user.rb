@@ -1,10 +1,10 @@
 module Api
   module V1
-    class Users < Grape::API
-      resources :users do
+    class User < Grape::API
+      resources :user do
         desc "User detail"
-        get "/:uid" do
-          user = User.find_by! uid: params[:uid]
+        get "/" do
+          user = ::User.first
 
           { id: user.uid, name: user.name, picture: user.picture }
         end

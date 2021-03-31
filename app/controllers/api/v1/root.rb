@@ -6,7 +6,7 @@ module Api
       format :json
 
       mount Auth
-      mount Users
+      mount User
     end
   end
 end

@@ -9,7 +9,8 @@ gem 'puma', '~> 5.0'
 gem 'grape'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'rack-cors'
-gem 'down'
+gem 'jwt'
+gem 'faraday'
 
 group :development, :test do
   gem 'pry-rails'

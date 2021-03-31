@@ -4,17 +4,31 @@ module Api
       resources :auth do
         desc "Login"
         params do
-          requires :uid, type: String, allow_blank: false
-          requires :name, type: String, allow_blank: false
-          requires :picture, type: String, allow_blank: false
+          requires :access_token, type: String, allow_blank: false
         end
         post "/login" do
-          declared_params = declared(params)
+          expected_fields = "id,name,picture.type(large)"
 
-          user = User.find_or_initialize_by uid: declared_params[:uid]
+          response = FaradayService.get(
+            'https://graph.facebook.com/me',
+            access_token: params[:access_token],
+            fields: expected_fields
+          ).body
 
-          user.assign_attributes declared_params
-          user.save!
+          response_with_json = JSON::parse response
+
+          unless response_with_json["error"]
+            user = ::User.find_or_initialize_by uid: response_with_json["id"]
+
+            user.assign_attributes(
+              name: response_with_json["name"],
+              picture: response_with_json["picture"]["data"]["url"]
+            )
+
+            user.save!
+
+            { access_token: user.uid }
+          end
         end
       end
     end
